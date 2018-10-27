@@ -86,7 +86,7 @@ class usuario{
 	}
 	public function insert(){
 		$sql = new sql();
-		$result = $sql->select("CALL sp_usuario_insert(:LOGIN,:PASSWORD)",array(
+		$result = $sql->select("CALL sp_usuario_insert(:LOGIN , :PASSWORD)",array(
 
 			':LOGIN'=>$this->getDeslogin(),
 			':PASSWORD'=>$this->getSenha()
@@ -105,7 +105,7 @@ class usuario{
 		$this->setSenha($password);
 
 		$sql = new sql();
-		$results = $sql->query("UPDATE tb_usuario SET deslogin = :LOGIN dessenha = :PASSWORD WHERE idusuario = :ID",array(
+		$results = $sql->query("UPDATE tb_usuario SET deslogin = :LOGIN ,dessenha = :PASSWORD WHERE idusuario = :ID",array(
 			':LOGIN'=>$this->getDeslogin(),
 			':PASSWORD'=>$this->getSenha(),
 			':ID'=>$this->getIdusuario()
