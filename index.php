@@ -33,14 +33,20 @@ require_once("config.php");
  //echo $user;
 
 //crinado um usuario insert
-$aluno = new usuario("ana","2222");
-$aluno->insert();
-echo $aluno;
+//$aluno = new usuario("ana","2222");
+//$aluno->insert();
+//echo $aluno;
 //echo json_encode($aluno);
 
+//alterar um usuario
 //$usuario = new usuario();
 //$usuario->loadbyId(3);
 //$usuario->update("professor","sasje");
 
 //echo $usuario;
+
+$usuario = new usuario();
+$usuario->loadbyId(1);
+$usuario->delete();
+echo "$usuario";
  ?>
