@@ -32,9 +32,15 @@ require_once("config.php");
 //echo json_encode($user);
  //echo $user;
 
-$aluno = new usuario("aline","2222");
-$aluno->insert();
-echo $aluno;
+//crinado um usuario insert
+//$aluno = new usuario("aline","2222");
+//$aluno->insert();
+//echo $aluno;
 //echo json_encode($aluno);
 
+$usuario = new usuario();
+$usuario->loadbyId(3);
+$usuario->update("professor","sasje");
+
+echo $usuario;
  ?>
