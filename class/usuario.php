@@ -42,12 +42,7 @@ class usuario{
 
 		if (isset($result[0])) {
 			# code...
-			$row = $result[0];
-
-			$this->setIdusuario($row['idusuario']);
-			$this->setDeslogin($row['deslogin']);
-			$this->setSenha($row['dessenha']);
-			$this->setCadastro(new DateTime($row['dtcadastro']));
+			$this->setData($result[0]);
 		}
 
 
@@ -77,32 +72,53 @@ class usuario{
 
 		$result = $sql->select(" SELECT * FROM tb_usuario WHERE deslogin = :LOGIN AND dessenha = :PASSWORD ",array(
 
-				':LOGIN'=> $login,
-				':PASSWORD'=> $password
+				":LOGIN"=> $login,
+				":PASSWORD"=> $password
 		));
 
 		if (isset($result[0])) {
 			# code...
-			$row = $result[0];
-
-			$this->setIdusuario($row['idusuario']);
-			$this->setDeslogin($row['deslogin']);
-			$this->setSenha($row['dessenha']);
-			$this->setCadastro(new DateTime($row['dtcadastro']));
+			$this->setData($result[0]);
 		} else {
 			throw new Exception("Login e/ou senha invalidos.");
 		}
 
 	}
+	public function insert(){
+		$sql = new sql();
+		$result = $sql->select("CALL sp_usuario_insert(:LOGIN,:PASSWORD)",array(
 
+			':LOGIN'=>$this->getDeslogin(),
+			':PASSWORD'=>$this->getSenha()
+		));
+		if (count($result) > 0) {
+			# code...
+			$this->setData($result[0]);
+		}
+
+
+	}
+
+public function __construct($login="",$password=""){
+
+	$this->setDeslogin($login);
+	$this->setSenha($password);
+}
+
+public function setData($data){
+
+			$this->setIdusuario($data['idusuario']);
+			$this->setDeslogin($data['deslogin']);
+			$this->setSenha($data['dessenha']);
+			$this->setCadastro(new DateTime($data['dtcadastro']));	
+}
 public function __toString(){
 
 	return json_encode(array(
 		"idusuario"=>$this->getIdusuario(),
 		"deslogin"=>$this->getDeslogin(),
 		"dessenha"=>$this->getSenha(),
-		"dtcadastro"=>$this->getCadastro()->format("d/m/Y H:i:s")
-
+		"dtcadastro"=>$this->getCadastro()//->format("d/m/Y H:i:s")
 
 	));
 }
